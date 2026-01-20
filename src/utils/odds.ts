@@ -28,6 +28,28 @@ export function calculateOdds(market: Market): MarketOutcome[] {
     });
 }
 
+export function getMarketStats(market: Market) {
+    const outcomes = calculateOdds(market);
+    
+    const totalBets = market.outcomes.reduce((sum, o) => sum + o.betCount, 0);
+    const feePool = market.totalPool * market.feeRate;
+    const payoutPool = market.totalPool - feePool;
+  
+    const sorted = [...outcomes].sort((a, b) => b.probability - a.probability);
+    const favorite = sorted[0];
+    const underdog = sorted[sorted.length - 1];
+  
+    return {
+      totalPool: market.totalPool,
+      totalBets,
+      feePool,
+      payoutPool,
+      outcomes,
+      favorite: favorite ? { label: favorite.label, probability: favorite.probability } : null,
+      underdog: underdog ? { label: underdog.label, odds: underdog.odds } : null,
+    };
+  }
+
 export function calculatePotentialPayout(amount: number, outcomeId: string, market: Market): number {
 
     const outcome = market.outcomes.find((o) => o.id === outcomeId);

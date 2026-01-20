@@ -39,7 +39,7 @@ export interface Market {
     maxBet?: number;
 }
 
-export type BetStatus = 'pending' | 'confrimed' | 'won' | 'lost' | 'refunded';
+export type BetStatus = 'pending' | 'confirmed' | 'won' | 'lost' | 'refunded';
 
 export interface Bet {
     id: string;
@@ -208,6 +208,7 @@ export const ErrorCodes = {
     MARKET_NOT_CLOSED: 'MARKET_NOT_CLOSED',
     MARKET_NOT_RESOLVED: 'MARKET_NOT_RESOLVED',
     INVALID_CONFIG: 'INVALID_CONFIG',
+    INSUFFICIENT_BALANCE: 'INSUFFICIENT_BALANCE',
 } as const;
 
 export type ErrorCode = typeof ErrorCodes[keyof typeof ErrorCodes];
